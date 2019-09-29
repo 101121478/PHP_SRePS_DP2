@@ -6,15 +6,15 @@ if(isset($_POST["query"]))
 {
  $search = mysqli_real_escape_string($connect, $_POST["query"]);
  $query = "
-  SELECT * FROM sales 
-  WHERE name LIKE '%".$search."%'
-  OR brand LIKE '%".$search."%'
+  SELECT * FROM item 
+  WHERE itemName LIKE '%".$search."%'
+  OR itemDesc LIKE '%".$search."%'
  ";
 }
 else
 {
  $query = "
-  SELECT * FROM sales ORDER BY id
+  SELECT * FROM item 
  ";
 }
 $result = mysqli_query($connect, $query);
@@ -24,18 +24,21 @@ if(mysqli_num_rows($result) > 0)
   <div class="table-responsive">
    <table class="table table bordered">
     <tr>
-     <th>Product name</th>
-     <th>Brand</th>
-     <th>Quantity</th>
+	 <th>ID</th>
+     <th>Name</th>
+     <th>Description</th>
+     <th>Unit Price</th>
     </tr>
  ';
  while($row = mysqli_fetch_array($result))
  {
   $output .= '
    <tr>
-    <td>'.$row["name"].'</td>
-    <td>'.$row["brand"].'</td>
-    <td>'.$row["quantity"].'</td>
+    <td>'.$row["ItemID"].'</td>
+	<td>'.$row["ItemName"].'</td>
+	<td>'.$row["ItemName"].'</td>
+    <td>'.$row["ItemDesc"].'</td>
+    <td>'.$row["ItemPrice"].'</td>
    </tr>
   ';
  }
