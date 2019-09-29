@@ -1,5 +1,11 @@
-# bootstrap-practice
+PHP-SRePS
 
-Responsive Bootstrap Website Start To Finish with Bootstrap 4, HTML5 &amp; CSS3
+SWE30010 - Development Project 2
 
-from: Drew Ryan (https://www.youtube.com/watch?v=9cKsq14Kfsw)
+
+HOW TO RUN:
+
+1. Install XAMPP
+2. Copy all files into C:/xampp/htdocs/*CREATE YOUR OWN FOLDER HERE*
+3. Open your web browser, and go to: localhost/*YOUR FOLDER NAME*/index.html
+
