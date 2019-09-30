@@ -23,7 +23,7 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="#">Home</a>
+					<a class="nav-link" href="index.html">Home</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Sales</a>
@@ -39,53 +39,26 @@
 	</div>
 </nav>
 
-<div class="container-fluid padding">
-	<div class="row welcome text-center">
-		<div class="col-12">
-			<h1 class="display-4">People's Health Pharmacy</h1>
-		</div>
-		<hr>
-		<div class="col-12">
-			<p class="lead">Our mission: To provide the best possible service we can to ensure that all your professional health requirements are met with excellence.</p>
-		</div>
-	</div>
-</div>
+<h1>Add New Item</h1>
+<p></p>
 
-<div class="container-fluid padding">
-	<div class="row text-center padding">
-		<div class="col-xs-12 col-sm-6 col-md-4">
-			<button class="button"><i class="fas fa-search"></i></button>
-			<h3>Search</h3>
-			<p>Search for an item</p>
-		</div>
-		<div class="col-xs-12 col-sm-6 col-md-4">
-			<button class="button" onclick="addPage()"><i class="fas fa-plus"></i></button>
-			<h3>Add</h3>
-			<p>Add an item</p>
-			<script>
-				function addPage(){location.assign("createItem.html")}
-			</script>	
-		</div>
-		<div class="col-sm-12 col-sm-6 col-md-4">
-			<button class="button"><i class="fas fa-chart-line"></i></button>
-			<h3>View Report</h3>
-			<p>View sales reports</p>
-		</div>
-	</div>
-	<hr class="my-4">
-</div>
-</body>
+<form id="Application" method="post" action="addItem.php" novalidate="novalidate">
+
+	<fieldset>
+		<legend>Item Details</legend>
+		<p><label for="FirstName">Item Name</label>
+			<input type="text" name="ItemName" id="ItemName" maxlength="20" /></p>
+			
+		<p><label for="LastName">Item Description</label>
+			<input type="text" name="ItemDesc" id="ItemDesc" maxlength="20" /></p>
+			
+		<p><label for="LastName">Item Price</label>
+			<input type="text" name="ItemPrice" id="ItemPrice" maxlength="20" /></p>
+	
+		<p>
+			<input type="submit" value="Add Item"/>
+			<input type="reset" value="Reset" />
+		</p>
+</form>
+</body
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
