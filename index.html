@@ -26,7 +26,7 @@
 					<a class="nav-link" href="#">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Sales</a>
+					<a class="nav-link" href="displaySales.php">Sales</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="search.html">Inventory</a>
@@ -59,9 +59,12 @@
 			<p>Search for an item</p>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-4">
-			<button class="button"><i class="fas fa-plus"></i></button>
+			<button class="button" onclick="addPage()"><i class="fas fa-plus"></i></button>
 			<h3>Add</h3>
 			<p>Add an item</p>
+			<script>
+				function addPage(){location.assign("createItem.html")}
+			</script>	
 		</div>
 		<div class="col-sm-12 col-sm-6 col-md-4">
 			<button class="button"><i class="fas fa-chart-line"></i></button>
