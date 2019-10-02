@@ -6,15 +6,15 @@ if(isset($_POST["query"]))
 {
  $search = mysqli_real_escape_string($connect, $_POST["query"]);
  $query = "
-  SELECT * FROM item 
-  WHERE itemName LIKE '%".$search."%'
-  OR itemDesc LIKE '%".$search."%'
+  SELECT * FROM item Inner join inventory on item.ItemID = inventory.itemID
+  WHERE item.itemName LIKE '%".$search."%'
+  OR item.itemDesc LIKE '%".$search."%'
  ";
 }
 else
 {
  $query = "
-  SELECT * FROM item 
+  SELECT * FROM item Inner join inventory on item.ItemID = inventory.itemID
  ";
 }
 $result = mysqli_query($connect, $query);
@@ -28,6 +28,7 @@ if(mysqli_num_rows($result) > 0)
      <th>Name</th>
      <th>Description</th>
      <th>Unit Price</th>
+	 <th>Qty in stock</th>
     </tr>
  ';
  while($row = mysqli_fetch_array($result))
@@ -36,9 +37,9 @@ if(mysqli_num_rows($result) > 0)
    <tr>
     <td>'.$row["ItemID"].'</td>
 	<td>'.$row["ItemName"].'</td>
-	<td>'.$row["ItemName"].'</td>
     <td>'.$row["ItemDesc"].'</td>
     <td>'.$row["ItemPrice"].'</td>
+	<td>'.$row["Current_stock"].'</td>
    </tr>
   ';
  }

@@ -1,46 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>People's Health Pharmacy</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-	<link href="style.css" rel="stylesheet">
-</head>
-<body>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-	<div class="container-fluid">
-		<a href="" class="navbar-brand" href="#"><img src="img/logo3.png" alt=""></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="index.html">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Sales</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="search.html">Inventory</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Reports</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</nav>
-
 <?php
-
 	if (isset ($_POST["ItemName"])) {
 		$itemName = $_POST["ItemName"];
 		$_SESSION['ItemName'] = $itemName;
@@ -64,9 +22,40 @@
 	else {
 		echo "<p>Item Price Required</p>";
 	}
-
+	
+	if (isset ($_POST["ItemQuantity"])) {
+		$itemQuantity = $_POST["ItemQuantity"];
+		$_SESSION['ItemQuantity'] = $itemQuantity;
+	}
+	else {
+		echo "<p>Item Quantity Required</p>";
+	}
+	
+	if (isset ($_POST["LowStockAmount"])) {
+		$lowStockAmount = $_POST["LowStockAmount"];
+		$_SESSION['LowStockAmount'] = $lowStockAmount;
+	}
+	else {
+		echo "<p>Low stock amount required</p>";
+	}
+	if (isset ($_POST["ExpiryDate"])) {
+		$expiryDate = $_POST["ExpiryDate"];
+		$_SESSION['ExpiryDate'] = $expiryDate;
+	}
+	else {
+		echo "<p>Expiry date required</p>";
+	}
+	
+	if (isset ($_POST["Shelf"])) {
+		$shelf = $_POST["Shelf"];
+		$_SESSION['Shelf'] = $shelf;
+	}
+	else {
+		echo "<p>Shelf required</p>";
+	}
+	
 	$errMsg = "";
-
+	
 	if($itemName == "")
 	{
 		$errMsg = "<p>Item name required</p>";
@@ -82,64 +71,47 @@
 		$errMsg .= "<p>Item price required</p>";
 	}
 	
+	if($itemQuantity == "")
+	{
+		$errMsg .= "<p>Item quantity required</p>";
+	}
+	
+	if($lowStockAmount == "")
+	{
+		$errMsg .= "<p>Low stock amount required</p>";
+	}
+	if($expiryDate == "")
+	{
+		$errMsg .= "<p>Expiry date required</p>";
+	}
+	if($shelf == "")
+	{
+		$errMsg = "<p>Shelf required</p>";
+	}
+	
 	if($errMsg != "")
 	{
 		echo $errMsg;
 	} else {
-		//fetch.php
 		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 		$output = '';
-		//if(isset($_POST["query"]))
-		//{
-		// $search = mysqli_real_escape_string($connect, $_POST["query"]);
-		 
-		 $query = "INSERT INTO item(ItemName, ItemDesc, ItemPrice) VALUES ('$itemName', '$itemDesc', '$itemPrice')";
-		//}
-		$result = mysqli_query($connect, $query);
+		$query1 = "INSERT INTO item(ItemName, ItemDesc, ItemPrice) VALUES ('$itemName', '$itemDesc', '$itemPrice')";
+		$result1 = mysqli_query($connect, $query1);	
 		
-		if($result > 0)
+		$itemIDquery= "SELECT itemID from item where itemname like '%".$itemName."%' AND itemdesc like '%".$itemDesc."%'";
+		$itemIDresult = mysqli_query($connect, $itemIDquery);
+		$row = mysqli_fetch_array($itemIDresult);
+		$itemID = $row['itemID'];
+		
+		$query3= "INSERT into inventory(itemID, Current_stock, Low_stock, Expiry_date, Shelf) VALUES ('$itemID', '$itemQuantity', '$lowStockAmount', '$expiryDate', '$shelf')";
+		$result3 = mysqli_query($connect, $query3);
+		
+		if(! $result1 )
 		{
-			$message = "$itemName has successfully been added!";
-			echo "<script type='text/javascript'>alert('$message');</script>";
-		
-			$query = "SELECT * FROM item ORDER BY ItemID";
-			//}
-			$result = mysqli_query($connect, $query);
-			
-			if(mysqli_num_rows($result) > 0)
-			{
-			 $output .= '
-			  <div class="table-responsive">
-			   <table class="table table bordered">
-				<tr>
-				 <th>itemID</th>
-				 <th>itemName</th>
-				 <th>itemDesc</th>
-				 <th>itemPrice</th>
-				</tr>
-			 ';
-			 while($row = mysqli_fetch_array($result))
-			 {
-			  $output .= '
-			   <tr>
-				<td>'.$row["ItemID"].'</td>
-				<td>'.$row["ItemName"].'</td>
-				<td>'.$row["ItemDesc"].'</td>
-				<td>'.$row["ItemPrice"].'</td>
-			   </tr>
-			  ';
-			 }
-			 echo $output;
-			}
-			else
-			{
-			 echo 'Data Not Found';
-			}
-	} else {
-		echo "An error has occured while adding the new item";
+			echo 'Could not enter data: ' . mysql_error();
+		}
+		echo "Entered data successfully";
 	}
-	}
-
 ?>
 </body
 </html>
