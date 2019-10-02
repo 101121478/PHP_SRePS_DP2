@@ -54,9 +54,12 @@
 <div class="container-fluid padding">
 	<div class="row text-center padding">
 		<div class="col-xs-12 col-sm-6 col-md-4">
-			<button class="button"><i class="fas fa-search"></i></button>
+			<button class="button" onclick="search()"><i class="fas fa-search"></i></button>
 			<h3>Search</h3>
 			<p>Search for an item</p>
+			<script>
+				function search(){location.assign("search.html")}
+			</script>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-4">
 			<button class="button" onclick="addPage()"><i class="fas fa-plus"></i></button>

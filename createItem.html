@@ -53,15 +53,32 @@
 			</div> 
 			<div class="form-group"> 
 				<label for="id2">Item Price</label> 
-				<input class="form-control" type="number" name="ItemPrice" id="ItemPrice" placeholder="Enter the item unit price"> 
+				<input class="form-control" type="number" step = ".01" name="ItemPrice" id="ItemPrice" placeholder="Enter the item unit price"> 
 			</div> 
+			<div class="form-group"> 
+				<label for="id2">Item Quantity</label> 
+				<input class="form-control" type="number" name="ItemQuantity" id="ItemQuantity" placeholder="Enter the item quantity"> 
+			</div>
+			<div class="form-group"> 
+				<label for="id2">Low stock amount</label> 
+				<input class="form-control" type="number" name="LowStockAmount" id="LowStockAmount" placeholder="Enter the low stock amount"> 
+			</div>
+			<div class="form-group"> 
+				<label for="id2">Expiry date</label> 
+				<input class="form-control" type="date" name="ExpiryDate" id="ExpiryDate" placeholder="Enter the expiry date"> 
+			</div>
+			<div class="form-group"> 
+				<label for="id2">Shelf</label> 
+				<input class="form-control" type="text" name="Shelf" id="Shelf" placeholder="Enter the shelf"> 
+			</div>
 			<div class="container"> 
 				<input type="submit" value="Add Item"/>
 				<input type="reset" value="Reset"/>
-			</div> 
+			</div>
+			
 		</form> 
 	</div> 
-	
+
 	<div>
 		<p id="result" align='center'></p>
 	</div>
