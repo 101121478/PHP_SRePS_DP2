@@ -29,6 +29,7 @@ CREATE TABLE `invoicedetail` (
  `ItemID` int(11) NOT NULL,
  `Quantity` int(11) NOT NULL,
  `Total` float NOT NULL,
+ `InvoiceDate` DATE NOT NULL,
  PRIMARY KEY (`InvoiceDetail`),
  KEY `InvoiceDetail` (`InvoiceDetail`),
  KEY `InvoiceID` (`InvoiceID`),

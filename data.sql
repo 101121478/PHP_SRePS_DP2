@@ -16,10 +16,10 @@ INSERT INTO `invoice` (`InvoiceID`, `InvoiceDate`) VALUES ('3', '2019-09-28');
 INSERT INTO `invoice` (`InvoiceID`, `InvoiceDate`) VALUES ('4', '2019-10-01');
 INSERT INTO `invoice` (`InvoiceID`, `InvoiceDate`) VALUES ('5', '2019-10-03');
 
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('1', '1', '1', '3', '18.51');
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('2', '1', '2', '5', '64.31');
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('3', '2', '2', '3', '73.10');
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('4', '2', '4', '10', '61.10');
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('5', '3', '3', '3', '11.09');
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('6', '4', '4', '3', '108.51');
-INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`) VALUES ('7', '5', '5', '3', '63.25');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('1', '1', '1', '3', '18.51', '2019-10-02');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('2', '1', '2', '5', '64.31', '2019-10-02');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('3', '2', '2', '3', '73.10', '2019-10-02');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('4', '2', '4', '10', '61.10', '2019-10-02');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('5', '3', '3', '3', '11.09', '2019-10-02');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('6', '4', '4', '3', '108.51', '2019-10-02');
+INSERT INTO `invoicedetail` (`InvoiceDetail`, `InvoiceID`, `ItemID`, `Quantity`, `Total`, `InvoiceDate`) VALUES ('7', '5', '5', '3', '63.25', '2019-10-02');
