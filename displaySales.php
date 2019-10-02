@@ -40,7 +40,16 @@
 	</div>
 </nav>
 
-<h2 align="center">Sales</h2><br />
+<h2 align="center">Sales</h2>
+
+<button class="button"  onclick="addSales()"><i ></i>Add Sale Record</button>
+<button class="button" onclick="editSales()"><i ></i>Edit Sale Record</button>
+<script>
+	function addSales(){location.assign("createSale.html")}
+	function editSales(){location.assign("createItem.html")}
+</script>	
+
+
 
 <?php
 
