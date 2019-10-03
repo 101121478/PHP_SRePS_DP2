@@ -46,7 +46,7 @@
 <button class="button" onclick="editSales()"><i ></i>Edit Sale Record</button>
 <script>
 	function addSales(){location.assign("createSale.html")}
-	function editSales(){location.assign("createItem.html")}
+	function editSales(){location.assign("updateSale.html")}
 </script>	
 
 
