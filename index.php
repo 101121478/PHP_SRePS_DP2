@@ -12,6 +12,8 @@
 	<link href="style.css" rel="stylesheet">
 </head>
 <body>
+
+<!-- Navigation -->
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<div class="container-fluid">
 		<a href="" class="navbar-brand" href="#"><img src="img/logo3.png" alt=""></a>
@@ -36,25 +38,60 @@
 		</div>
 	</div>
 </nav>
-<table style='text-align:left;' border = '1'>
-	<tr><th>ID</th><th>Detail</th><th>Quantity</th><th>Date</th>
-<?php         
-		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
-		if(!$con){
-		die(mysql_error());
-		}
-		$sql = mysql_query("SELECT * FROM invoicedetail WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) <= Invoicedate");
-		$datarow = mysql_num_rows($sql);
-		for ($i = 0;$i<$datarow;$i++){
-			$sql_arr = mysql_fetch_assoc($sql);
-			$detail = $sql_arr['InvoiceDetail'];
-			$ID = $sql_arr['InvoiceID'];
-			$quantity = $sql_arr['Quantity'];
-			$date = $sql_arr['InvoiceDate'];
-			echo "<tr><td>$ID</td><td>$detail</td><td>$quantity</td><td>$date</td></tr>";
-			}
-?>
-</table>
-</body>
 
+<div class="container-fluid padding">
+	<div class="row welcome text-center">
+		<div class="col-12">
+			<h1 class="display-4">People's Health Pharmacy</h1>
+		</div>
+		<hr>
+		<div class="col-12">
+			<p class="lead">Our mission: To provide the best possible service we can to ensure that all your professional health requirements are met with excellence.</p>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid padding">
+	<div class="row text-center padding">
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<button class="button" onclick="search()"><i class="fas fa-search"></i></button>
+			<h3>Search</h3>
+			<p>Search for an item</p>
+			<script>
+				function search(){location.assign("search.html")}
+			</script>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<button class="button" onclick="addPage()"><i class="fas fa-plus"></i></button>
+			<h3>Add</h3>
+			<p>Add an item</p>
+			<script>
+				function addPage(){location.assign("createItem.html")}
+			</script>	
+		</div>
+		<div class="col-sm-12 col-sm-6 col-md-4">
+			<button class="button" onclick="report()"><i class="fas fa-chart-line"></i></button>
+			<h3>View Report</h3>
+			<p>View sales reports</p>
+			<script>
+				function report(){location.assign("showweek.html")}
+			</script>
+		</div>
+	</div>
+	<hr class="my-4">
+</div>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -40,16 +40,7 @@
 	</div>
 </nav>
 
-<h2 align="center">Sales</h2>
-
-<button class="button"  onclick="addSales()"><i ></i>Add Sale Record</button>
-<button class="button" onclick="editSales()"><i ></i>Edit Sale Record</button>
-<script>
-	function addSales(){location.assign("createSale.html")}
-	function editSales(){location.assign("updateSale.html")}
-</script>	
-
-
+<h2 align="center">Sales</h2><br />
 
 <?php
 
@@ -62,7 +53,7 @@
 		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 		$output = '';
 
-		$query = "SELECT invoicedetail.*, invoice.InvoiceDate FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID";
+		$query = "SELECT invoicedetail.*, invoice.*, item.* FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID Inner Join item on invoicedetail.itemID = item.itemID";
 		 
 		$result = mysqli_query($connect, $query);
 
@@ -72,9 +63,10 @@
 			  <div class="table-responsive">
 			   <table class="table table bordered">
 				<tr>
-				 <th>Invoice Detail</th>
+				 
 				 <th>Invoice ID</th>
 				 <th>Item ID</th>
+				 <th>Item name</th>
 				 <th>Quantity</th>
 				 <th>Total</th>
 				 <th>Invoice Date</th>
@@ -84,9 +76,10 @@
 			 {
 			  $output .= '
 			   <tr>
-				<td>'.$row["InvoiceDetail"].'</td>
+				
 				<td>'.$row["InvoiceID"].'</td>
 				<td>'.$row["ItemID"].'</td>
+				<td>'.$row["ItemName"].'</td>
 				<td>'.$row["Quantity"].'</td>
 				<td>'.$row["Total"].'</td>
 				<td>'.$row["InvoiceDate"].'</td>
