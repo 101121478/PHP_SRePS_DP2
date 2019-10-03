@@ -28,8 +28,7 @@
 	}
 	
 	if (isset ($_POST["InvoiceDate"])) {
-		$rawDate = $_POST["InvoiceDate"];
-		$invoiceDate = date('Y-m-d', strtotime($rawDate));
+		$invoiceDate = $_POST["InvoiceDate"];
 		$_SESSION['InvoiceDate'] = $invoiceDate;
 	}
 	
