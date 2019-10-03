@@ -54,8 +54,7 @@
 	
 	if($errMsg != "")
 	{
-		echo $errMsg;;
-	echo $invoiceDate;
+		echo $errMsg;
 	} else {
 		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 		$output = '';
