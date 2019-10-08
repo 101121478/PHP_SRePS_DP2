@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
-<html>
-<head> 
-<title>Search for an item</title>
-<meta charset="utf-8">
+<html lang="en">
+<head>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>People's Health Pharmacy</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -13,9 +11,7 @@
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	<link href="style.css" rel="stylesheet">
 </head>
-
-<body> 
-<!-- Navigation -->
+<body>
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<div class="container-fluid">
 		<a href="" class="navbar-brand" href="#"><img src="img/logo3.png" alt=""></a>
@@ -30,58 +26,50 @@
 				<li class="nav-item">
 					<a class="nav-link" href="displaySales.php">Sales</a>
 				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Inventory</a>
-				</li>
 				<li class="nav-item">
+					<a class="nav-link" href="search.html">Inventory</a>
+				</li>
+				<li class="nav-item active">
 					<a class="nav-link" href="getReports.html">Reports</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
-	<div class="container">
-		<br />
-		<h2 align="center">Search for an item</h2><br />
-		<div class="form-group">
-		<div class="input-group"> 
-		<input type="text" name="search_text" id="search_text" placeholder="Search by Item Details" class="form-control" />
-		</div>
-		</div>
-		<br />
-		<div id="result"></div>
-		</div>
-	
+
+<input type="button" id="weeklySales" name="weeklySales" value="View Weekly Sales" >
+<input type="button" id="monthlySales" name="monthlySales" value="View Monthly Sales"><br>
+<br />
+<div id="result"></div>
+</div>
+  
 <script>
 		$(document).ready(function(){
-
-		 load_data();
-
-		 function load_data(query)
-		 {
-		  $.ajax({
-		   url:"fetch.php",
-		   method:"POST",
-		   data:{query:query},
-		   success:function(data)
-		   {
-			$('#result').html(data);
-		   }
-		  });
-		 }
-		 $('#search_text').keyup(function(){
-		  var search = $(this).val();
-		  if(search != '')
-		  {
-		   load_data(search);
-		  }
-		  else
-		  {
-		   load_data();
-		  }
-		 });
+		
+			$("#weeklySales").click(function(){
+				
+				$.ajax({
+					type: 'POST',
+					url: 'weeklyReport.php',
+					success: function(data) {
+						$('#result').html(data);
+					}
+				});
+			});
+			
+			$("#monthlySales").click(function(){
+				
+				$.ajax({
+					type: 'POST',
+					url: 'monthlyReport.php',
+					success: function(data) {
+						$('#result').html(data);
+					}
+				});
+			});
 		});
 		</script>
+</table>
 </body>
 
 </html>

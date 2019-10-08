@@ -33,7 +33,7 @@
 					<a class="nav-link" href="search.html">Inventory</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Reports</a>
+					<a class="nav-link" href="getReports.html">Reports</a>
 				</li>
 			</ul>
 		</div>
