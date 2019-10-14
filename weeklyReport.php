@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Sales</title>
+<title>Sales Report</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>People's Health Pharmacy</title>
@@ -13,7 +13,6 @@
 	<link href="style.css" rel="stylesheet">
 </head>
 <body>
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 	<div class="container-fluid">
@@ -27,7 +26,7 @@
 					<a class="nav-link" href="index.php">Home</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="#">Sales</a>
+					<a class="nav-link" href="displaySales.php">Sales</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="EditItemPage.php">Inventory</a>
@@ -40,13 +39,8 @@
 	</div>
 </nav>
 
-<h2 align="center">Sales</h2>
-
-<script>
-	function addSales(){location.assign("addSale.php")}
-	function editSales(){location.assign("updateSale.php")}
-</script>	
-
+<h2 align="center">Weekly Sales Report</h2>
+<div id="table">
 <?php
 	$errMsg = "";
 	if($errMsg != "")
@@ -57,11 +51,10 @@
 		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 		$output = '';
 
-		$query = "SELECT invoicedetail.*, invoice.InvoiceDate,item.* FROM invoicedetail  JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID
-		JOIN item ON invoicedetail.ItemID=item.ItemID";
+		$query = "SELECT invoicedetail.*, invoice.InvoiceDate, item.* FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID 
+		join item on invoicedetail.ItemID = item.ItemID WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) <= InvoiceDate ORDER BY InvoiceDate";
 		 
 		$result = mysqli_query($connect, $query);
-
 			if(mysqli_num_rows($result) > 0)
 			{
 			 $output .= '
@@ -75,6 +68,7 @@
 				 <th>Total</th>
 				 <th>Invoice Date</th>
 				</tr>
+				
 			 ';
 			 while($row = mysqli_fetch_array($result))
 			 {
@@ -87,8 +81,10 @@
 				<td>'.$row["Total"].'</td>
 				<td>'.$row["InvoiceDate"].'</td>
 			   </tr>
+			   </div>
 			  ';
 			 }
+			 
 			 echo $output;
 			}
 			else
@@ -97,7 +93,6 @@
 			}
 	}
 ?>
-<button class="btn btn-outline-primary" onclick='addSales()'><i ></i>Add Sale Record</button>
-<button class="btn btn-outline-primary" onclick='editSales()'><i ></i>Edit Sale Record</button>
+</div>
 </body>
 </html>

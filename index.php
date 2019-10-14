@@ -29,10 +29,10 @@
 					<a class="nav-link" href="displaySales.php">Sales</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="search.html">Inventory</a>
+					<a class="nav-link" href="EditItemPage.php">Inventory</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="showweek.html">Reports</a>
+					<a class="nav-link" href="reports.php">Reports</a>
 				</li>
 			</ul>
 		</div>
@@ -58,7 +58,7 @@
 			<h3>Search</h3>
 			<p>Search for an item</p>
 			<script>
-				function search(){location.assign("search.html")}
+				function search(){location.assign("search.php")}
 			</script>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-4">
@@ -66,7 +66,7 @@
 			<h3>Add</h3>
 			<p>Add an item</p>
 			<script>
-				function addPage(){location.assign("createItem.html")}
+				function addPage(){location.assign("createItem.php")}
 			</script>	
 		</div>
 		<div class="col-sm-12 col-sm-6 col-md-4">
@@ -74,7 +74,7 @@
 			<h3>View Report</h3>
 			<p>View sales reports</p>
 			<script>
-				function report(){location.assign("showweek.html")}
+				function report(){location.assign("reports.php")}
 			</script>
 		</div>
 	</div>

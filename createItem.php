@@ -23,17 +23,17 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="index.php">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="displaySales.php">Sales</a>
+				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="index.html">Home</a>
+					<a class="nav-link" href="editItemPage.php">Inventory</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Sales</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="search.html">Inventory</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Reports</a>
+					<a class="nav-link" href="">Reports</a>
 				</li>
 			</ul>
 		</div>
@@ -41,34 +41,38 @@
 </nav>
 
 	<div class="container"> 
-		<h4>Add new sale record</h4> 
-		<form action="addSale.php" method="post" id="Application"> 
+		<h4>Add new item</h4> 
+		<form action="addItem.php" method="post" id="Application"> 
 			<div class="form-group"> 
-				<label for="InvoiceDetail">Invoice detail</label> 
-				<input class="form-control" type="number" name="InvoiceDetail" id="InvoiceDetail" placeholder="Enter the invoice detail"> 
+				<label for="id1">Item name</label> 
+				<input class="form-control" type="text" name="ItemName" id="ItemName" placeholder="Enter the item name"> 
 			</div>
 			<div class="form-group"> 
-				<label for="InvoiceID">Invoice ID</label> 
-				<input class="form-control" type="number" name="InvoiceID" id="InvoiceID" placeholder="Enter the invoice id"> 
+				<label for="id1">Item Description</label> 
+				<input class="form-control" type="text" name="ItemDesc" id="ItemDesc" placeholder="Enter the item description"> 
 			</div> 
 			<div class="form-group"> 
-				<label for="ItemID">Item ID</label> 
-				<input class="form-control" type="number" step = ".01" name="ItemID" id="ItemID" placeholder="Enter the item id"> 
+				<label for="id2">Item Price</label> 
+				<input class="form-control" type="number" step = ".01" name="ItemPrice" id="ItemPrice" placeholder="Enter the item unit price"> 
 			</div> 
 			<div class="form-group"> 
-				<label for="Quantity">Quantity</label> 
-				<input class="form-control" type="number" name="Quantity" id="Quantity" placeholder="Enter the quantity"> 
+				<label for="id2">Item Quantity</label> 
+				<input class="form-control" type="number" name="ItemQuantity" id="ItemQuantity" placeholder="Enter the item quantity"> 
 			</div>
 			<div class="form-group"> 
-				<label for="Total">Total</label> 
-				<input class="form-control" type="float" name="Total" id="Total" placeholder="Enter the total cost"> 
+				<label for="id2">Low stock amount</label> 
+				<input class="form-control" type="number" name="LowStockAmount" id="LowStockAmount" placeholder="Enter the low stock amount"> 
 			</div>
 			<div class="form-group"> 
-				<label for="InvoiceDate">Invoice Date</label> 
-				<input class="form-control" type="date" name="InvoiceDate" id="InvoiceDate" placeholder="Enter the invoice date"> 
+				<label for="id2">Expiry date</label> 
+				<input class="form-control" type="date" name="ExpiryDate" id="ExpiryDate" placeholder="Enter the expiry date"> 
+			</div>
+			<div class="form-group"> 
+				<label for="id2">Shelf</label> 
+				<input class="form-control" type="text" name="Shelf" id="Shelf" placeholder="Enter the shelf"> 
 			</div>
 			<div class="container"> 
-				<input type="submit" value="Add Sale"/>
+				<input type="submit" value="Add Item"/>
 				<input type="reset" value="Reset"/>
 			</div>
 			

@@ -1,127 +1,93 @@
-<?php
-	if (isset ($_POST["InvoiceDetail"])) {
-		$InvoiceDetail = $_POST["InvoiceDetail"];
-		$_SESSION['InvoiceDetail'] = $InvoiceDetail;
-	}
-	else {
-		echo "<p>Invoice detail Required</p>";
-	}
-	
-	if (isset ($_POST["InvoiceID"])) {
-		$InvoiceID = $_POST["InvoiceID"];
-		$_SESSION['InvoiceID'] = $InvoiceID;
-	}
-	else {
-		echo "<p>Invoice ID Required</p>";
-	}
-	
-	if (isset ($_POST["ItemID"])) {
-		$ItemID = $_POST["ItemID"];
-		$_SESSION['ItemID'] = $ItemID;
-	}
-	else {
-		echo "<p>Item ID Required</p>";
-	}
-	
-	if (isset ($_POST["Quantity"])) {
-		$Quantity = $_POST["Quantity"];
-		$_SESSION['Quantity'] = $Quantity;
-	}
-	else {
-		echo "<p>Quantity Required</p>";
-	}
-	
-	if (isset ($_POST["Total"])) {
-		$Total = $_POST["Total"];
-		$_SESSION['Total'] = $Total;
-	}
-	else {
-		echo "<p>Total cost required</p>";
-	}
-	if (isset ($_POST["InvoiceDate"])) {
-		$InvoiceDate = $_POST["InvoiceDate"];
-		$_SESSION['InvoiceDate'] = $InvoiceDate;
-	}
-	else {
-		echo "<p>Invoice date required</p>";
-	}
-	
-	
-	$errMsg = "";
-	
-	if($InvoiceDetail == "")
-	{
-		$errMsg = "<p>Invoice detail required</p>";
-	}
-	
-	if($InvoiceID == "")
-	{
-		$errMsg .= "<p>Invoice id required</p>";
-	}
-	
-	if($ItemID == "")
-	{
-		$errMsg .= "<p>Item id required</p>";
-	}
-	
-	if($Quantity == "")
-	{
-		$errMsg .= "<p>Quantity required</p>";
-	}
-	
-	if($Total == "")
-	{
-		$errMsg .= "<p>Total cost required</p>";
-	}
-	if($InvoiceDate == "")
-	{
-		$errMsg .= "<p>Invoice date required</p>";
-	}
-	
-	if($errMsg != "")
-	{
-		echo $errMsg;
-	} else {
-		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
-		$output = '';
-		
-		$invoiceIDCheck = "SELECT * FROM invoice WHERE InvoiceID like '%".$InvoiceID."%'";
-		
-		$resultOfInvoiceCheck = mysqli_query($connect, $invoiceIDCheck);
-		if(!mysqli_num_rows($resultOfInvoiceCheck) > 0)
-		{
-			$insertInvoice = mysqli_query($connect, "INSERT INTO invoice(InvoiceID, InvoiceDate) VALUES ('$InvoiceID', 'InvoiceDate')");
-		} 
-		
-		$invoiceDetailCheck = "SELECT InvoiceDetail FROM invoicedetail WHERE InvoiceDetail LIKE '%".$InvoiceDetail."%'";
-		$resultInvoiceDetailCheck = mysqli_query($connect, $invoiceDetailCheck);
-		
-		if(!mysqli_num_rows($resultInvoiceDetailCheck) > 0)
-		{
-			$insertNewSale = "INSERT INTO invoicedetail (InvoiceDetail, InvoiceID, ItemID, Quantity, Total) VALUES ('$InvoiceDetail', '$InvoiceID', '$ItemID', '$Quantity', '$Total')";
-			$result = mysqli_query($connect, $insertNewSale);
-			echo "Sale successfully added";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Add a sale</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+	<div class="container-fluid">
+		<a href="" class="navbar-brand" href="#"><img src="img/logo3.png" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="index.php">Home</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="displaySales.php">Sales</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="EditItemPage.php">Inventory</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="reports.php">Reports</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+	<div class="container"> 
+		<h4>Add new sale record</h4> 
+		<form action="addSaleScript.php" method="post" id="Application"> 
+			<div class="form-group"> 
+				<label for="InvoiceID">Invoice ID</label> 
+				<input class="form-control" type="number" name="InvoiceID" id="InvoiceID" placeholder="Enter the invoice id"> 
+			</div> 
+			<div class="form-group"> 
+				<label for="ItemID">Item ID</label> 
+				<input class="form-control" type="number" step = ".01" name="ItemID" id="ItemID" placeholder="Enter the item id"> 
+			</div> 
+			<div class="form-group"> 
+				<label for="Quantity">Quantity</label> 
+				<input class="form-control" type="number" name="Quantity" id="Quantity" placeholder="Enter the quantity"> 
+			</div>
+			<div class="form-group"> 
+				<label for="Total">Total</label> 
+				<input class="form-control" type="float" name="Total" id="Total" placeholder="Enter the total cost"> 
+			</div>
+			<div class="form-group"> 
+				<label for="InvoiceDate">Invoice Date</label> 
+				<input class="form-control" type="date" name="InvoiceDate" id="InvoiceDate" placeholder="Enter the invoice date"> 
+			</div>
+			<div class="container"> 
+				<input type="submit" value="Add Sale"/>
+				<input type="reset" value="Reset"/>
+			</div>
 			
-		} else {
-			echo "<p>Invalid Invoice Detail. Invoice detail already exists.</p>";
-		}
-		/*$query1 = "INSERT INTO item(ItemName, ItemDesc, ItemPrice) VALUES ('$itemName', '$itemDesc', '$itemPrice')";
-		$result1 = mysqli_query($connect, $query1);	
-		
-		$itemIDquery= "SELECT itemID from item where itemname like '%".$itemName."%' AND itemdesc like '%".$itemDesc."%'";
-		$itemIDresult = mysqli_query($connect, $itemIDquery);
-		$row = mysqli_fetch_array($itemIDresult);
-		$itemID = $row['itemID'];
-		
-		$query3= "INSERT into inventory(itemID, Current_stock, Low_stock, Expiry_date, Shelf) VALUES ('$itemID', '$itemQuantity', '$lowStockAmount', '$expiryDate', '$shelf')";
-		$result3 = mysqli_query($connect, $query3);
-		
-		if(! $result1 )
-		{
-			echo 'Could not enter data: ' . mysql_error();
-		}
-		echo "Entered data successfully";
-*/	}
-?>
+		</form> 
+	</div> 
+	<div>
+		<p id="result" align='center'></p>
+	</div>
+	<script>
+	$("#Application").submit(function(e) {
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+    var form = $(this);
+    var url = form.attr('action');
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               $('#result').html(data); // show response from the php script.
+           }
+         });
+	});
+	</script>
+
 </body
 </html>
