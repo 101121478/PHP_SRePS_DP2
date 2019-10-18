@@ -41,6 +41,7 @@
 
 <h2 align="center">Monthly Sales Report</h2>
 <div id="table">
+
 <?php
 	$errMsg = "";
 	if($errMsg != "")
@@ -93,6 +94,7 @@
 			}
 	}
 ?>
-</div>
+</div> 
+<a href="do.php" class="btn btn-success pull-right">Export Members</a>
 </body>
 </html>
