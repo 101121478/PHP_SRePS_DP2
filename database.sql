@@ -2,6 +2,7 @@ CREATE TABLE `item` (
  `ItemID` int(11) NOT NULL AUTO_INCREMENT,
  `ItemName` varchar(250) CHARACTER SET latin1 NOT NULL,
  `ItemDesc` varchar(1000) CHARACTER SET latin1 NOT NULL,
+ `ItemCategory` varchar(1000) CHARACTER SET latin1 NOT NULL,	
  `ItemPrice` float NOT NULL,
  PRIMARY KEY (`ItemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -40,7 +40,7 @@
 </nav>
 
 <h2 align="center">Monthly Sales Report</h2>
-<div id="table">
+<div id="weekly-table" class="px-4">
 <?php
 	$errMsg = "";
 	if($errMsg != "")
@@ -50,23 +50,77 @@
 		
 		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 		$output = '';
-		$day = date("j") - 1;
-		$query = "SELECT invoicedetail.*, invoice.InvoiceDate, item.* FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID join item on invoicedetail.ItemID = item.ItemID
-		WHERE DATE_SUB(CURDATE(),INTERVAL $day DAY) <= InvoiceDate ORDER BY InvoiceDate";
-		 
-		$result = mysqli_query($connect, $query);
+		$output2 = '';
+		
+		$query2 = "SELECT COUNT(DISTINCT invoicedetail.invoiceID) as count,
+		ROUND(SUM(invoicedetail.Total),2) as total,
+		SUM(invoicedetail.Quantity) as quantity,
+		item.ItemCategory as category
+		from invoicedetail
+		join invoice on invoicedetail.invoiceid = invoice.invoiceid
+		join item on invoicedetail.itemid = item.itemid
+		WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= InvoiceDate 
+		group by item.itemCategory
+		order by quantity DESC"; 
+		
+		
+		$result2 = mysqli_query($connect, $query2);
+			if(mysqli_num_rows($result2) > 0)
+			{
+			 $output2 .= '
+			  <div class="table-responsive">
+			   <table class="table table-striped text-center">
+				<tr>
+				 <th>Category</th>
+				 <th>Number of invoices</th>
+				 <th>Quantity</th>
+				 <th>Total amount</th>
+				</tr>
+				
+			 ';
+			 while($row = mysqli_fetch_array($result2))
+			 {
+			  $output2 .= '
+			   <tr>
+				<td>'.$row["category"].'</td>
+				<td>'.$row["count"].'</td>
+				<td>'.$row["quantity"].'</td>
+				<td>'.$row["total"].'</td>
+
+			   </tr>
+			   </div>
+			  ';
+			 }
+			 
+			 echo $output2;
+			}
+			
+			echo'<br><br>';
+			echo'<h4>Breakdown of sales by category:</h4>';
+			
+			$query = "select SUM(Quantity) as Quantity,
+			ROUND(SUM(Total),2) as Total, 
+			ItemName,
+			invoice.invoicedate,
+			invoicedetail.ItemID
+			FROM invoicedetail
+			join item on invoicedetail.ItemID = item.ItemID
+			join invoice on invoicedetail.InvoiceID = invoice.InvoiceID
+			WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= invoice.InvoiceDate
+			GROUP by invoicedetail.itemid
+			ORDER by quantity DESC";
+			
+			$result = mysqli_query($connect, $query);
 			if(mysqli_num_rows($result) > 0)
 			{
 			 $output .= '
 			  <div class="table-responsive">
-			   <table class="table table bordered">
+			   <table class="table table-striped text-center">
 				<tr>
-				 <th>Invoice ID</th>
 				 <th>Item ID</th>
 				 <th>Item Name</th>
 				 <th>Quantity</th>
-				 <th>Total</th>
-				 <th>Invoice Date</th>
+				 <th>Total Amount</th>
 				</tr>
 				
 			 ';
@@ -74,12 +128,10 @@
 			 {
 			  $output .= '
 			   <tr>
-				<td>'.$row["InvoiceID"].'</td>
 				<td>'.$row["ItemID"].'</td>
 				<td>'.$row["ItemName"].'</td>
 				<td>'.$row["Quantity"].'</td>
 				<td>'.$row["Total"].'</td>
-				<td>'.$row["InvoiceDate"].'</td>
 			   </tr>
 			   </div>
 			  ';
@@ -87,10 +139,8 @@
 			 
 			 echo $output;
 			}
-			else
-			{
-			 echo 'Data Not Found';
-			}
+			echo'<br><br>';
+			echo'<h4>Breakdown of sales by item:</h4>';
 	}
 ?>
 </div>
