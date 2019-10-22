@@ -71,7 +71,7 @@
 				$totalSales = 0;
 				
 				$query = "SELECT invoicedetail.ItemID, invoicedetail.Quantity, invoicedetail.Total, invoice.InvoiceDate FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID 
-				join item on invoicedetail.ItemID = item.ItemID WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= InvoiceDate AND invoicedetail.ItemID = ".$row['ItemID']." ORDER BY ItemID";
+				join item on invoicedetail.ItemID = item.ItemID WHERE DATE_SUB(CURDATE(),INTERVAL 60 DAY) <= InvoiceDate AND invoicedetail.ItemID = ".$row['ItemID']." ORDER BY ItemID";
 		
 				$sql2 = mysqli_query($connect, $query);
 					
@@ -81,8 +81,8 @@
 					$totalSales += $table["Total"];
 				}
 				
-				$totalQuantity = $totalQuantity / 4;
-				$totalSales = $totalSales / 4;
+				$totalQuantity = $totalQuantity / 3;
+				$totalSales = $totalSales / 3;
 				
 			  $output .= '
 			   <tr>
