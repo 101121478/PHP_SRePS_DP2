@@ -43,6 +43,13 @@
 
 <div id="weekly-table" class="px-4">
 <?php
+
+
+	echo '<form method="post" action="exportWeekCategory.php">
+	<input type="submit" name="exportWeekCategory" value="Export to CSV file" class="btn btn-primary"/>
+	</form>';
+
+
 	$errMsg = "";
 	if($errMsg != "")
 	{
@@ -140,7 +147,14 @@
 			 echo $output;
 			}
 			echo'<br><br>';
+			
+			echo '<form method="post" action="exportWeekItem.php">
+			<input type="submit" name="exportWeekItem" value="Export to CSV file" class="btn btn-primary"/>
+			</form>';
+			
+			echo '<br><br>';
 			echo'<h4>Breakdown of sales by item:</h4>';
+			
 	}
 ?>
 </div>

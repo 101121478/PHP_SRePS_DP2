@@ -42,6 +42,11 @@
 <h2 align="center">Monthly Sales Report</h2>
 <div id="weekly-table" class="px-4">
 <?php
+	
+	echo '<form method="post" action="exportMonthCategory.php">
+	<input type="submit" name="exportMonthCategory" value="Export to CSV file" class="btn btn-primary"/>
+	</form>';
+
 	$errMsg = "";
 	if($errMsg != "")
 	{
@@ -139,6 +144,12 @@
 			 
 			 echo $output;
 			}
+			echo'<br><br>';
+			
+			echo '<form method="post" action="exportMonthItem.php">
+			<input type="submit" name="exportMonthItem" value="Export to CSV file" class="btn btn-primary"/>
+			</form>';
+			
 			echo'<br><br>';
 			echo'<h4>Breakdown of sales by item:</h4>';
 	}

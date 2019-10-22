@@ -39,9 +39,9 @@
 	</div>
 </nav>
 
-
+<div class="px-4">
 <?php
-	echo "<h1>Predicted sales of inidividual items for next week</h1>";
+	echo "<h1>Predicted sales of inidividual items for next month</h1>";
 
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 	
@@ -56,7 +56,7 @@
 			{
 			 $output .= '
 			  <div class="table-responsive">
-			   <table class="table table bordered">
+			   <table class="table table-striped text-center">
 				<tr>
 				 <th>Item ID</th>
 				 <th>Item Name</th>
@@ -71,7 +71,7 @@
 				$totalSales = 0;
 				
 				$query = "SELECT invoicedetail.ItemID, invoicedetail.Quantity, invoicedetail.Total, invoice.InvoiceDate FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID 
-				join item on invoicedetail.ItemID = item.ItemID WHERE DATE_SUB(CURDATE(),INTERVAL 60 DAY) <= InvoiceDate AND invoicedetail.ItemID = ".$row['ItemID']." ORDER BY ItemID";
+				join item on invoicedetail.ItemID = item.ItemID WHERE DATE_SUB(CURDATE(),INTERVAL 90 DAY) <= InvoiceDate AND invoicedetail.ItemID = ".$row['ItemID']." ORDER BY ItemID";
 		
 				$sql2 = mysqli_query($connect, $query);
 					
@@ -101,6 +101,6 @@
 			 echo 'Data Not Found';
 			}
 ?>
-
+</div>
 </body>
 </html>

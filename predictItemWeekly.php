@@ -39,7 +39,7 @@
 	</div>
 </nav>
 
-
+<div class="px-4">
 <?php
 	echo "<h1>Predicted sales of inidividual items for next week</h1>";
 
@@ -56,7 +56,7 @@
 			{
 			 $output .= '
 			  <div class="table-responsive">
-			   <table class="table table bordered">
+			   <table class="table table-striped text-center">
 				<tr>
 				 <th>Item ID</th>
 				 <th>Item Name</th>
@@ -101,6 +101,6 @@
 			 echo 'Data Not Found';
 			}
 ?>
-
+</div>
 </body>
 </html>
