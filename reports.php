@@ -69,6 +69,14 @@
 				function report(){location.assign("monthlyReport.php")}
 			</script>
 		</div>
+		<div class="col-sm-12 col-sm-6 col-md-4">
+			<button class="button" onclick="predItemWeekly()"><i class="fas fa-chart-line"></i></button>
+			<h3>Item sales predictions</h3>
+			<p>Sales Predictions of Inidvidual Items for Upcoming Week</p>
+			<script>
+				function predItemWeekly(){location.assign("predictItemWeekly.php")}
+			</script>
+		</div>
 	</div>
 	<hr class="my-4">
 </div>
