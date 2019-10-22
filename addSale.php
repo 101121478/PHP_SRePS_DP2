@@ -63,8 +63,8 @@
 				<input class="form-control" type="date" name="InvoiceDate" id="InvoiceDate" placeholder="Enter the invoice date"> 
 			</div>
 			<div class="container"> 
-				<input type="submit" value="Add Sale"/>
-				<input type="reset" value="Reset"/>
+				<input type="submit" class="btn-outline-primary" value="Add Sale"/>
+				<input type="reset" class="btn-outline-primary" value="Reset"/>
 			</div>
 			
 		</form> 
