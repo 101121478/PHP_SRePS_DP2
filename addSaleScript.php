@@ -96,7 +96,7 @@
 				}
 				elseif($row[0] <= $col[0] && $row[0] > 0)
 				{
-					echo("Low Stock, restock is needed soon");
+					echo("Low Stock, restock is needed soon <br>");
 					$insertInvoice = mysqli_query($connect, "INSERT INTO invoice(InvoiceID, InvoiceDate) VALUES ('$InvoiceID', '$InvoiceDate')");
 					if(!$insertInvoice) 
 					{
@@ -114,7 +114,7 @@
 				}
 				elseif($row[0] <= 0)
 				{
-					echo("OUT OF STOCK, RESUPPLY IMMEDIATELY");
+					echo("OUT OF STOCK, RESUPPLY IMMEDIATELY <br>" );
 					$insertInvoice = mysqli_query($connect, "INSERT INTO invoice(InvoiceID, InvoiceDate) VALUES ('$InvoiceID', '$InvoiceDate')");
 					if(!$insertInvoice) 
 					{
@@ -130,7 +130,23 @@
 						echo "Sale successfully added";
 					}
 				}
-				
+				else
+				{
+					$insertInvoice = mysqli_query($connect, "INSERT INTO invoice(InvoiceID, InvoiceDate) VALUES ('$InvoiceID', '$InvoiceDate')");
+					if(!$insertInvoice) 
+					{
+						echo("Error description: " . mysqli_error($connect));
+					} 
+					$insertNewSale = mysqli_query($connect, "INSERT INTO invoicedetail (InvoiceID, ItemID, Quantity, Total) VALUES ('$InvoiceID', '$ItemID', '$Quantity', '$Total')");
+					if(!$insertNewSale)
+					{
+						echo("Error description: " . mysqli_error($connect));
+					}
+					else 
+					{
+						echo "Sale successfully added";
+					}
+				}
 			}
 		}
 		
