@@ -27,6 +27,7 @@ if(mysqli_num_rows($result) > 0)
 	 <th>ID</th>
      <th>Name</th>
      <th>Description</th>
+	 <th>Catogory</th>
      <th>Unit Price</th>
 	 <th>Qty in stock</th>
     </tr>
@@ -38,6 +39,7 @@ if(mysqli_num_rows($result) > 0)
     <td>'.$row["ItemID"].'</td>
 	<td>'.$row["ItemName"].'</td>
     <td>'.$row["ItemDesc"].'</td>
+	<td>'.$row["ItemCategory"].'</td>
     <td>'.$row["ItemPrice"].'</td>
 	<td>'.$row["Current_stock"].'</td>
    </tr>
