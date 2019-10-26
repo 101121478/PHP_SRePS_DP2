@@ -8,7 +8,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"</script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	<link href="style.css" rel="stylesheet">
 </head>
@@ -41,122 +43,88 @@
 
 <h2 align="center">Weekly Sales Report</h2>
 
-<div id="weekly-table" class="px-4">
-<?php
+<form class="m-4">
+  <fieldset>
+    <div class="form-group">
+	  <label>Start date</label>
+      <input type="text" name="from_date" id="from_date"/>
+    </div>
+    <div class="form-group">
+	<label>End date</label>
+      <input type="text" name="to_date" id="to_date"/>
+    </div>
+    <input type="button" name="filter" id="item_button" value="View by items" class="btn btn-primary"/>
+	<input type="button" name="filter" id="category_button" value="View by category" class="btn btn-primary"/>
+  </fieldset>
+</form>
 
+<div class="table-responsive" id="report_table_item">
+</div>
 
-	echo '<form method="post" action="exportWeekCategory.php">
-	<input type="submit" name="exportWeekCategory" value="Export to CSV file" class="btn btn-primary"/>
-	</form>';
-
-
-	$errMsg = "";
-	if($errMsg != "")
-	{
-		echo $errMsg;
-	} else {
-		
-		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
-		$output = '';
-		$output2 = '';
-		
-		$query2 = "SELECT COUNT(DISTINCT invoicedetail.invoiceID) as count,
-		ROUND(SUM(invoicedetail.Total),2) as total,
-		SUM(invoicedetail.Quantity) as quantity,
-		item.ItemCategory as category
-		from invoicedetail
-		join invoice on invoicedetail.invoiceid = invoice.invoiceid
-		join item on invoicedetail.itemid = item.itemid
-		WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) <= InvoiceDate 
-		group by item.itemCategory
-		order by quantity DESC"; 
-		
-		
-		$result2 = mysqli_query($connect, $query2);
-			if(mysqli_num_rows($result2) > 0)
-			{
-			 $output2 .= '
-			  <div class="table-responsive">
-			   <table class="table table-striped text-center">
-				<tr>
-				 <th>Category</th>
-				 <th>Number of invoices</th>
-				 <th>Quantity</th>
-				 <th>Total amount</th>
-				</tr>
-				
-			 ';
-			 while($row = mysqli_fetch_array($result2))
-			 {
-			  $output2 .= '
-			   <tr>
-				<td>'.$row["category"].'</td>
-				<td>'.$row["count"].'</td>
-				<td>'.$row["quantity"].'</td>
-				<td>'.$row["total"].'</td>
-			   </tr>
-			   </div>
-			  ';
-			 }
-			 
-			 echo $output2;
-			}
-			
-			echo'<br><br>';
-			echo'<h4>Breakdown of sales by category:</h4>';
-			
-			$query = "select SUM(Quantity) as Quantity,
-			ROUND(SUM(Total),2) as Total, 
-			ItemName,
-			invoice.invoicedate,
-			invoicedetail.ItemID
-			FROM invoicedetail
-			join item on invoicedetail.ItemID = item.ItemID
-			join invoice on invoicedetail.InvoiceID = invoice.InvoiceID
-			WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) <= invoice.InvoiceDate
-			GROUP by invoicedetail.itemid
-			ORDER by quantity DESC";
-			
-			$result = mysqli_query($connect, $query);
-			if(mysqli_num_rows($result) > 0)
-			{
-			 $output .= '
-			  <div class="table-responsive">
-			   <table class="table table-striped text-center">
-				<tr>
-				 <th>Item ID</th>
-				 <th>Item Name</th>
-				 <th>Quantity</th>
-				 <th>Total Amount</th>
-				</tr>
-				
-			 ';
-			 while($row = mysqli_fetch_array($result))
-			 {
-			  $output .= '
-			   <tr>
-				<td>'.$row["ItemID"].'</td>
-				<td>'.$row["ItemName"].'</td>
-				<td>'.$row["Quantity"].'</td>
-				<td>'.$row["Total"].'</td>
-			   </tr>
-			   </div>
-			  ';
-			 }
-			 
-			 echo $output;
-			}
-			echo'<br><br>';
-			
-			echo '<form method="post" action="exportWeekItem.php">
-			<input type="submit" name="exportWeekItem" value="Export to CSV file" class="btn btn-primary"/>
-			</form>';
-			
-			echo '<br><br>';
-			echo'<h4>Breakdown of sales by item:</h4>';
-			
-	}
-?>
+ <div class="table-responsive"id="report_table_category">
 </div>
 </body>
 </html>
+
+<script>
+	$(document).ready(function() {
+		$.datepicker.setDefaults({
+			dateFormat:'yy-mm-dd'
+		})
+		$(function() {
+			$("#from_date").datepicker();
+			$("#to_date").datepicker();
+		});
+		
+		$('#item_button').click(function() {
+			var from_date = $("#from_date").val();
+			var to_date =  $("#to_date").val();
+			if(from_date != "" && to_date != "") {
+				$.ajax({
+					url:"weeklyReportFilterItem.php",
+					method:"POST",
+					data: 
+					{
+						from_date:from_date, to_date:to_date
+					},
+					success:function(data)
+					{
+						$("#report_table_item").html(data);
+						$("#report_table_category").html("");
+						console.log(data.d);
+						
+					},
+					error: function ()
+					{ alert('ERROR: Unable to generate reports'); }
+				});
+			} else {
+				alert("Please select date");
+			}
+			});
+			$('#category_button').click(function() {
+			var from_date = $("#from_date").val();
+			var to_date =  $("#to_date").val();
+			if(from_date != "" && to_date != "") {
+				$.ajax({
+					url:"weeklyReportFilterCategory.php",
+					method:"POST",
+					data: 
+					{
+						from_date:from_date, to_date:to_date
+					},
+					success:function(data)
+					{
+						$("#report_table_item").html("");
+						$("#report_table_category").html(data);
+						console.log(data.d);
+						
+					},
+					error: function ()
+					{ alert('ERROR: Unable to generate reports'); }
+				});
+			} else {
+				alert("Please select date");
+			}
+			});
+	});
+</script>
