@@ -8,7 +8,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"</script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	<link href="style.css" rel="stylesheet">
 </head>
@@ -40,120 +42,106 @@
 </nav>
 
 <h2 align="center">Monthly Sales Report</h2>
-<div id="weekly-table" class="px-4">
-<?php
+
+<!-- <form class="form-inline">
+	<div class="col-md-3">
+		<input type="text" name="from_date" id="from_date"/>
+	</div>
+
+	<div class="col-md-3">
+		<input type="text" name="to_date" id="to_date"/>
+	</div>
+
+	<div class="col-md-5">
+		<input type="button" name="filter" id="item_button" value="View by items" class="btn btn-primary"/>
+	</div>
 	
-	echo '<form method="post" action="exportMonthCategory.php">
-	<input type="submit" name="exportMonthCategory" value="Export to CSV file" class="btn btn-primary"/>
-	</form>';
+	<div class="col-md-5">
+		<input type="button" name="filter" id="category_button" value="View by cateogory" class="btn btn-primary"/>
+	</div>
+</form>
+-->
+<form class="m-4">
+  <fieldset>
+ 
+	<div class="form-group" style="width:10rem;">
+	<label>Select month:</label>
+		<select class="form-control" id="month">
+			<option value="1">January</option>
+			<option value="2">February</option>
+			<option value="3">March</option>
+			<option value="4">April</option>
+			<option value="5">May</option>
+			<option value="6">June</option>
+			<option value="7">July</option>
+			<option value="8">August</option>
+			<option value="9">September</option>
+			<option value="10">October</option>
+			<option value="11">November</option>
+			<option value="12">December</option>
+		</select>
+	</div>
+    <input type="button" name="filter" id="item_button" value="View by items" class="btn btn-primary"/>
+	<input type="button" name="filter" id="category_button" value="View by category" class="btn btn-primary"/>
+  </fieldset>
+</form>
 
-	$errMsg = "";
-	if($errMsg != "")
-	{
-		echo $errMsg;
-	} else {
-		
-		$connect = mysqli_connect("localhost", "root", "", "php_sreps");
-		$output = '';
-		$output2 = '';
-		
-		$query2 = "SELECT COUNT(DISTINCT invoicedetail.invoiceID) as count,
-		ROUND(SUM(invoicedetail.Total),2) as total,
-		SUM(invoicedetail.Quantity) as quantity,
-		item.ItemCategory as category
-		from invoicedetail
-		join invoice on invoicedetail.invoiceid = invoice.invoiceid
-		join item on invoicedetail.itemid = item.itemid
-		WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= InvoiceDate 
-		group by item.itemCategory
-		order by quantity DESC"; 
-		
-		
-		$result2 = mysqli_query($connect, $query2);
-			if(mysqli_num_rows($result2) > 0)
-			{
-			 $output2 .= '
-			  <div class="table-responsive">
-			   <table class="table table-striped text-center">
-				<tr>
-				 <th>Category</th>
-				 <th>Number of invoices</th>
-				 <th>Quantity</th>
-				 <th>Total amount</th>
-				</tr>
-				
-			 ';
-			 while($row = mysqli_fetch_array($result2))
-			 {
-			  $output2 .= '
-			   <tr>
-				<td>'.$row["category"].'</td>
-				<td>'.$row["count"].'</td>
-				<td>'.$row["quantity"].'</td>
-				<td>'.$row["total"].'</td>
+<div class="table-responsive" id="report_table_item">
+</div>
 
-			   </tr>
-			   </div>
-			  ';
-			 }
-			 
-			 echo $output2;
-			}
-			
-			echo'<br><br>';
-			echo'<h4>Breakdown of sales by category:</h4>';
-			
-			$query = "select SUM(Quantity) as Quantity,
-			ROUND(SUM(Total),2) as Total, 
-			ItemName,
-			invoice.invoicedate,
-			invoicedetail.ItemID
-			FROM invoicedetail
-			join item on invoicedetail.ItemID = item.ItemID
-			join invoice on invoicedetail.InvoiceID = invoice.InvoiceID
-			WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= invoice.InvoiceDate
-			GROUP by invoicedetail.itemid
-			ORDER by quantity DESC";
-			
-			$result = mysqli_query($connect, $query);
-			if(mysqli_num_rows($result) > 0)
-			{
-			 $output .= '
-			  <div class="table-responsive">
-			   <table class="table table-striped text-center">
-				<tr>
-				 <th>Item ID</th>
-				 <th>Item Name</th>
-				 <th>Quantity</th>
-				 <th>Total Amount</th>
-				</tr>
-				
-			 ';
-			 while($row = mysqli_fetch_array($result))
-			 {
-			  $output .= '
-			   <tr>
-				<td>'.$row["ItemID"].'</td>
-				<td>'.$row["ItemName"].'</td>
-				<td>'.$row["Quantity"].'</td>
-				<td>'.$row["Total"].'</td>
-			   </tr>
-			   </div>
-			  ';
-			 }
-			 
-			 echo $output;
-			}
-			echo'<br><br>';
-			
-			echo '<form method="post" action="exportMonthItem.php">
-			<input type="submit" name="exportMonthItem" value="Export to CSV file" class="btn btn-primary"/>
-			</form>';
-			
-			echo'<br><br>';
-			echo'<h4>Breakdown of sales by item:</h4>';
-	}
-?>
+ <div class="table-responsive"id="report_table_category">
 </div>
 </body>
 </html>
+
+<script>
+	$(document).ready(function() {
+		$.datepicker.setDefaults({
+			dateFormat:'yy-mm-dd'
+		})
+		$(function() {
+			$("#from_date").datepicker();
+			$("#to_date").datepicker();
+		});
+		
+		$('#item_button').click(function() {
+				$.ajax({
+					url:"monthlyReportFilterItem.php",
+					method:"POST",
+					data: 
+					{
+						month:$("#month").val()
+					},
+					success:function(data)
+					{
+						$("#report_table_item").html(data);
+						$("#report_table_category").html("");
+						console.log(data.d);
+						
+					},
+					error: function ()
+					{ alert('ERROR: Unable to generate reports'); }
+				});
+			});
+		
+			$('#category_button').click(function() {
+				$.ajax({
+					url:"monthlyReportFilterCategory.php",
+					method:"POST",
+					data: 
+					{
+						month:$("#month").val()
+					},
+					success:function(data)
+					{
+						$("#report_table_item").html("");
+						$("#report_table_category").html(data);
+						console.log(data.d);
+						
+					},
+					error: function ()
+					{ alert('ERROR: Unable to generate reports'); }
+				});
+			});
+	});
+</script>
