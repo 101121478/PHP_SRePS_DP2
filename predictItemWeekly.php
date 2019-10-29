@@ -64,11 +64,15 @@
 				 <th>Predicted Sales</th>
 				</tr>
 			 ';
-			 			 
+			
+			$overallTotal = 0;
+			$overallQuantity = 0;
+			
 			 while($row = mysqli_fetch_array($sql1))
 			 {
 				$totalQuantity = 0;
 				$totalSales = 0;
+				
 				
 				$query = "SELECT invoicedetail.ItemID, invoicedetail.Quantity, invoicedetail.Total, invoice.InvoiceDate FROM invoicedetail INNER JOIN invoice ON invoicedetail.InvoiceID=invoice.InvoiceID 
 				join item on invoicedetail.ItemID = item.ItemID WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= InvoiceDate AND invoicedetail.ItemID = ".$row['ItemID']." ORDER BY ItemID";
@@ -84,6 +88,9 @@
 				$totalQuantity = $totalQuantity / 4;
 				$totalSales = $totalSales / 4;
 				
+				$overallTotal += $totalSales;
+				$overallQuantity += $totalQuantity;
+				
 			  $output .= '
 			   <tr>
 				<td>'.$row["ItemID"].'</td>
@@ -93,8 +100,16 @@
 			   </tr>
 			  ';
 			 }
-			 echo $output;
+			 $output .= '
+			   <tr>
+				<td> </td>
+				<td><strong> TOTAL </strong></td>
+				<td> <strong>'.round($overallQuantity).'</strong> </td>
+				<td> <strong>$'.round($overallTotal).'</strong> </td>
+			   </tr>
+			  ';
 			 
+			 echo $output;
 			}
 			else
 			{

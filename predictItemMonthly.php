@@ -64,7 +64,10 @@
 				 <th>Predicted Sales</th>
 				</tr>
 			 ';
-			 			 
+								
+			$overallTotal = 0;
+			$overallQuantity = 0;
+			
 			 while($row = mysqli_fetch_array($sql1))
 			 {
 				$totalQuantity = 0;
@@ -84,6 +87,9 @@
 				$totalQuantity = $totalQuantity / 3;
 				$totalSales = $totalSales / 3;
 				
+				$overallTotal += $totalSales;
+				$overallQuantity += $totalQuantity;
+				
 			  $output .= '
 			   <tr>
 				<td>'.$row["ItemID"].'</td>
@@ -93,6 +99,15 @@
 			   </tr>
 			  ';
 			 }
+			 
+			 $output .= '
+			   <tr>
+				<td> </td>
+				<td><strong> TOTAL </strong></td>
+				<td> <strong>'.round($overallQuantity).'</strong> </td>
+				<td> <strong>$'.round($overallTotal).'</strong> </td>
+			   </tr>
+			  ';
 			 echo $output;
 			 
 			}
