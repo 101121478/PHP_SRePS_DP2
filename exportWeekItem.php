@@ -11,7 +11,7 @@ if(isset($_POST["from_date_item"]))
 			ItemName,
 			invoice.invoicedate,
 			invoicedetail.ItemID
-			FROM invoice```detail
+			FROM invoicedetail
 			join item on invoicedetail.ItemID = item.ItemID
 			join invoice on invoicedetail.InvoiceID = invoice.InvoiceID
 			WHERE invoice.InvoiceDate BETWEEN '$from_date' AND '$to_date'
