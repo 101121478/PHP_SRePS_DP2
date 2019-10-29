@@ -1,6 +1,10 @@
 <?php
-if(isset($_POST["exportWeekCategory"]))
-{
+if(isset($_POST["from_date_category"]))
+{	
+	$from_date = $_POST["from_date_category"];
+	$to_date = $_POST["to_date_category"];
+
+
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 	
 	$query = "SELECT COUNT(DISTINCT invoicedetail.invoiceID) as num_invoices,
@@ -10,7 +14,7 @@ if(isset($_POST["exportWeekCategory"]))
 		from invoicedetail
 		join invoice on invoicedetail.invoiceid = invoice.invoiceid
 		join item on invoicedetail.itemid = item.itemid
-		WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) <= InvoiceDate 
+		WHERE invoice.InvoiceDate BETWEEN '$from_date' AND '$to_date' 
 		group by item.itemCategory
 		order by quantity DESC";
 		

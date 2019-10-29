@@ -60,7 +60,11 @@ if(isset($_POST["month"]))
 		$from_date = "2019-12-01";
 		$to_date = "2019-12-31";
 	}
-
+	
+	
+	$totalQuantity = 0;
+	$totalAmount = 0;
+	$numInvoices = 0;	
 	
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 	$output = "";
@@ -89,7 +93,11 @@ if(isset($_POST["month"]))
 	if(mysqli_num_rows($result) > 0)
 	{
 		while($row = mysqli_fetch_array($result)) 
-		{
+		{	
+			$totalQuantity += $row["quantity"];
+			$totalAmount += $row["total"];
+			$numInvoices += $row["count"];
+			
 			$output .= 
 			'
 			<tr>
@@ -100,6 +108,14 @@ if(isset($_POST["month"]))
 			</tr>
 			';
 		}
+		$output .= "
+				<tr>
+				 <td> <strong> TOTAL </strong> </td>
+				 <td> <strong> $numInvoices </strong> </td>
+				 <td> <strong> $totalQuantity </strong> </td>
+				 <td> <strong> $totalAmount </strong> </td>
+				</tr>
+				";
 	}
 	else
 	{
@@ -108,8 +124,8 @@ if(isset($_POST["month"]))
 				<td colspan='4'>Nothing found!</td>
 			</tr>
 		";
-	$output .= "</table>";
 	}
+	$output .= "</table>";
 	echo $output;
 }
 ?>

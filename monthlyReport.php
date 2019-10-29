@@ -27,13 +27,13 @@
 				<li class="nav-item">
 					<a class="nav-link" href="index.php">Home</a>
 				</li>
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="displaySales.php">Sales</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="EditItemPage.php">Inventory</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item active">
 					<a class="nav-link" href="reports.php">Reports</a>
 				</li>
 			</ul>
@@ -43,30 +43,11 @@
 
 <h2 align="center">Monthly Sales Report</h2>
 
-<!-- <form class="form-inline">
-	<div class="col-md-3">
-		<input type="text" name="from_date" id="from_date"/>
-	</div>
-
-	<div class="col-md-3">
-		<input type="text" name="to_date" id="to_date"/>
-	</div>
-
-	<div class="col-md-5">
-		<input type="button" name="filter" id="item_button" value="View by items" class="btn btn-primary"/>
-	</div>
-	
-	<div class="col-md-5">
-		<input type="button" name="filter" id="category_button" value="View by cateogory" class="btn btn-primary"/>
-	</div>
-</form>
--->
 <form class="m-4">
   <fieldset>
- 
 	<div class="form-group" style="width:10rem;">
 	<label>Select month:</label>
-		<select class="form-control" id="month">
+		<select class="form-control" id="month" name="month">
 			<option value="1">January</option>
 			<option value="2">February</option>
 			<option value="3">March</option>
@@ -83,8 +64,19 @@
 	</div>
     <input type="button" name="filter" id="item_button" value="View by items" class="btn btn-primary"/>
 	<input type="button" name="filter" id="category_button" value="View by category" class="btn btn-primary"/>
+	
   </fieldset>
 </form>
+
+	<form class="m-4" method="POST" action="exportMonthCategory.php">
+		<input type="submit" name="exportMonthCategory" value="Export monthly category report to CSV file" class="btn btn-primary" id="exportMonthCategoryButton" style="display: none;"/>
+		<input type="text" id="monthChosen1" name="monthChosen1" id="para" style="display: none;"></p>
+	</form>
+	
+	<form class="m-4" method="POST" action="exportMonthItem.php">
+		<input type="submit" name="exportMonthCategory" value="Export monthly item report to CSV file" class="btn btn-primary" id="exportMonthItemButton" style="display: none;"/>
+		<input type="text" id="monthChosen2" name="monthChosen2" id="para" style="display: none;"></p>
+	</form>
 
 <div class="table-responsive" id="report_table_item">
 </div>
@@ -105,6 +97,9 @@
 		});
 		
 		$('#item_button').click(function() {
+				$('#monthChosen2').val($("#month").val());
+				$('#exportMonthCategoryButton').hide();
+				$('#exportMonthItemButton').show();
 				$.ajax({
 					url:"monthlyReportFilterItem.php",
 					method:"POST",
@@ -125,6 +120,10 @@
 			});
 		
 			$('#category_button').click(function() {
+				$('#monthChosen1').val($("#month").val());
+				$('#exportMonthItemButton').hide();
+				$('#exportMonthCategoryButton').show();
+				
 				$.ajax({
 					url:"monthlyReportFilterCategory.php",
 					method:"POST",

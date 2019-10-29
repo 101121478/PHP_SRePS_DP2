@@ -27,13 +27,13 @@
 				<li class="nav-item">
 					<a class="nav-link" href="index.php">Home</a>
 				</li>
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="displaySales.php">Sales</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="EditItemPage.php">Inventory</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item active">
 					<a class="nav-link" href="reports.php">Reports</a>
 				</li>
 			</ul>
@@ -58,6 +58,18 @@
   </fieldset>
 </form>
 
+	<form class="m-4" method="POST" action="exportWeekItem.php">
+		<input type="submit" name="exportWeekItem" value="Export weekly item report to CSV file" class="btn btn-primary" id="exportWeekItemButton" style="display: none;"/>
+		<input type="text" id="from_date_item" name="from_date_item" id="para" style="display: none;"></p>
+		<input type="text" id="to_date_item" name="to_date_item" id="para" style="display: none;"></p>
+	</form>
+	
+	<form class="m-4" method="POST" action="exportWeekCategory.php">
+		<input type="submit" name="exportWeekCategory" value="Export weekly category report to CSV file" class="btn btn-primary" id="exportWeekCategoryButton" style="display: none;"/>
+		<input type="text" id="from_date_category" name="from_date_category" id="para" style="display: none;"></p>
+		<input type="text" id="to_date_category" name="to_date_category" id="para" style="display: none;"></p>
+	</form>
+
 <div class="table-responsive" id="report_table_item">
 </div>
 
@@ -79,6 +91,12 @@
 		$('#item_button').click(function() {
 			var from_date = $("#from_date").val();
 			var to_date =  $("#to_date").val();
+			
+			$('#exportWeekCategoryButton').hide();
+			$('#exportWeekItemButton').show();
+			$('#from_date_item').val($("#from_date").val());
+			$('#to_date_item').val($("#to_date").val());
+			
 			if(from_date != "" && to_date != "") {
 				$.ajax({
 					url:"weeklyReportFilterItem.php",
@@ -104,6 +122,12 @@
 			$('#category_button').click(function() {
 			var from_date = $("#from_date").val();
 			var to_date =  $("#to_date").val();
+			
+			$('#exportWeekCategoryButton').show();
+			$('#exportWeekItemButton').hide();
+			$('#from_date_category').val($("#from_date").val());
+			$('#to_date_category').val($("#to_date").val());
+			
 			if(from_date != "" && to_date != "") {
 				$.ajax({
 					url:"weeklyReportFilterCategory.php",

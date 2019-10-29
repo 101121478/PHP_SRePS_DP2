@@ -85,6 +85,22 @@
 				function predItemMonthly(){location.assign("predictItemMonthly.php")}
 			</script>
 		</div>
+		<div class="col-sm-12 col-sm-6 col-md-4">
+			<button class="button" onclick="predGroupWeekly()"><i class="fas fa-chart-line"></i></button>
+			<h3>Group Item Predictions</h3>
+			<p>Weekly</p>
+			<script>
+				function predGroupWeekly(){location.assign("predictGroupWeekly.php")}
+			</script>
+		</div>
+		<div class="col-sm-12 col-sm-6 col-md-4">
+			<button class="button" onclick="predGroupMonthly()"><i class="fas fa-chart-line"></i></button>
+			<h3>Group Item Predictions</h3>
+			<p>Monthly</p>
+			<script>
+				function predGroupMonthly(){location.assign("predictGroupMonthly.php")}
+			</script>
+		</div>
 	</div>
 	<hr class="my-4">
 </div>

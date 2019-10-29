@@ -4,7 +4,10 @@ if(isset($_POST["from_date"], $_POST["to_date"]))
 	
 	$from_date = $_POST["from_date"];
 	$to_date = $_POST["to_date"];
-
+	
+	$totalQuantity = 0;
+	$totalAmount = 0;
+	$numInvoices = 0;
 	
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 	$output = "";
@@ -34,6 +37,10 @@ if(isset($_POST["from_date"], $_POST["to_date"]))
 	{
 		while($row = mysqli_fetch_array($result)) 
 		{
+			$totalQuantity += $row["quantity"];
+			$totalAmount += $row["total"];
+			$numInvoices += $row["count"];
+			
 			$output .= 
 			'
 			<tr>
@@ -44,6 +51,14 @@ if(isset($_POST["from_date"], $_POST["to_date"]))
 			</tr>
 			';
 		}
+		$output .= "
+				<tr>
+				 <td> <strong> TOTAL </strong> </td>
+				 <td> <strong> $numInvoices </strong> </td>
+				 <td> <strong> $totalQuantity </strong> </td>
+				 <td> <strong> $totalAmount </strong> </td>
+				</tr>
+				";
 	}
 	else
 	{

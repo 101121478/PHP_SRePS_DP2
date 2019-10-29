@@ -1,7 +1,67 @@
 <?php
-if(isset($_POST["exportMonthCategory"]))
+if(isset($_POST["monthChosen1"]))
 {
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
+	
+	$month = $_POST["monthChosen1"];
+	
+	if($month == "1") {
+		$from_date = "2019-01-01";
+		$to_date = "2019-01-31";
+	}
+	
+	if($month == "2") {
+		$from_date = "2019-02-01";
+		$to_date = "2019-02-28";
+	}
+	
+	if($month == "3") {
+		$from_date = "2019-03-01";
+		$to_date = "2019-03-31";
+	}
+	
+	if($month == "4") {
+		$from_date = "2019-04-01";
+		$to_date = "2019-04-30";
+	}
+	
+	if($month == "5") {
+		$from_date = "2019-05-01";
+		$to_date = "2019-05-31";
+	}
+	
+	if($month == "6") {
+		$from_date = "2019-06-01";
+		$to_date = "2019-06-30";
+	}
+	
+	if($month == "7") {
+		$from_date = "2019-07-01";
+		$to_date = "2019-07-31";
+	}
+	if($month == "8") {
+		$from_date = "2019-08-01";
+		$to_date = "2019-08-31";
+	}
+	
+	if($month == "9") {
+		$from_date = "2019-09-01";
+		$to_date = "2019-09-30";
+	}
+	
+	if($month == "10") {
+		$from_date = "2019-10-01";
+		$to_date = "2019-10-31";
+	}
+	if($month == "11") {
+		$from_date = "2019-11-01";
+		$to_date = "2019-11-30";
+	}
+	
+	if($month == "12") {
+		$from_date = "2019-12-01";
+		$to_date = "2019-12-31";
+	}
 	
 	$query = "SELECT COUNT(DISTINCT invoicedetail.invoiceID) as num_invoices,
 		ROUND(SUM(invoicedetail.Total),2) as total,
@@ -10,15 +70,15 @@ if(isset($_POST["exportMonthCategory"]))
 		from invoicedetail
 		join invoice on invoicedetail.invoiceid = invoice.invoiceid
 		join item on invoicedetail.itemid = item.itemid
-		WHERE DATE_SUB(CURDATE(),INTERVAL 30 DAY) <= InvoiceDate 
+		WHERE invoice.invoicedate BETWEEN '$from_date' AND '$to_date'
 		group by item.itemCategory
 		order by quantity DESC";
 		
-		function mysqli_field_name($result, $field_offset)
-		{
-			$properties = mysqli_fetch_field_direct($result, $field_offset);
-			return is_object($properties) ? $properties->name : null;
-		}
+	function mysqli_field_name($result, $field_offset)
+	{
+		$properties = mysqli_fetch_field_direct($result, $field_offset);
+		return is_object($properties) ? $properties->name : null;
+	}
 		
 	$result = mysqli_query($connect, $query);
 	$number_of_fields = mysqli_num_fields($result);
