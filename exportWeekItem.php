@@ -1,7 +1,10 @@
 <?php
-if(isset($_POST["exportWeekItem"]))
+if(isset($_POST["from_date_item"]))
 {
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
+	
+	$from_date = $_POST["from_date_item"];
+	$to_date = $_POST["to_date_item"];
 	
 	$query = "select SUM(Quantity) as Quantity,
 			ROUND(SUM(Total),2) as Total, 
@@ -11,7 +14,7 @@ if(isset($_POST["exportWeekItem"]))
 			FROM invoicedetail
 			join item on invoicedetail.ItemID = item.ItemID
 			join invoice on invoicedetail.InvoiceID = invoice.InvoiceID
-			WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) <= invoice.InvoiceDate
+			WHERE invoice.InvoiceDate BETWEEN '$from_date' AND '$to_date'
 			GROUP by invoicedetail.itemid
 			ORDER by quantity DESC";
 		

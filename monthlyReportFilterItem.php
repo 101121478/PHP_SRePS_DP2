@@ -61,7 +61,10 @@ if(isset($_POST["month"]))
 		$to_date = "2019-12-31";
 	}
 	
-
+	$totalQuantity = 0;
+	$totalAmount = 0;
+	
+	
 	$connect = mysqli_connect("localhost", "root", "", "php_sreps");
 	$output = "";
 	$query = "
@@ -91,6 +94,9 @@ if(isset($_POST["month"]))
 	{
 		while($row = mysqli_fetch_array($result)) 
 		{
+			$totalQuantity += $row["Quantity"];
+			$totalAmount += $row["Total"];
+			
 			$output .= 
 			'
 			<tr>
@@ -101,6 +107,14 @@ if(isset($_POST["month"]))
 			</tr>
 			';
 		}
+		$output .= "
+				<tr>
+				 <td> </td>
+				 <td> <strong> TOTAL </strong> </td>
+				 <td> <strong> $totalQuantity </strong></td>
+				 <td> <strong> $totalAmount </strong> </td>
+				</tr>
+				";
 	}
 	else
 	{
@@ -109,8 +123,9 @@ if(isset($_POST["month"]))
 				<td colspan='4'>Nothing found!</td>
 			</tr>
 		";
-	$output .= "</table>";
 	}
+	
+	$output .= "</table>";
 	echo $output;
 }
 ?>
